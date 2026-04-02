@@ -12,9 +12,11 @@
 % FUENTE Y FORMATO
 % =========================
 \usepackage{newtxtext,newtxmath}
-\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[a4paper,top=2.4cm,bottom=2.4cm,left=2.3cm,right=2.3cm]{geometry}
 \usepackage{setspace}
 \setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
 
 % =========================
 % PAQUETES ÚTILES
@@ -28,6 +30,9 @@
 \usepackage{soulutf8}
 \usepackage{xurl}
 \usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
 \Urlmuskip=0mu plus 1mu\relax
 
 \hypersetup{
@@ -36,8 +41,25 @@
     citecolor=black,
     urlcolor=blue,
     pdftitle={Artículo METANOIA},
-    pdfauthor={Bryan Stalin Guatemal Avilez}
+    pdfauthor={Bryan Stalin Guatemal Avilez; Korayma Pico}
 }
+
+\titleformat{\section}{\bfseries\normalsize}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection.}{0.5em}{}
+
+% =========================
+% ENCABEZADO Y PIE DE PÁGINA
+% =========================
+\setlength{\headheight}{32pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Metanoia: Revista de Ciencia, Tecnología e Innovación\\\small Revista Científica de la Universidad Regional Autónoma de Los Andes}
+\fancyhead[R]{\small ISSN: 2953-6545}
+
+\fancyfoot[C]{\small Volumen 10 | Número 2 | Julio -- Diciembre, 2024}
+\fancyfoot[R]{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
 
 % =========================
 % COLORES PARA LA INTRODUCCIÓN
@@ -66,7 +88,7 @@
   sortcites=true
 ]{biblatex}
 \DeclareLanguageMapping{spanish}{spanish-apa}
-\addbibresource{sample.bib}
+\addbibresource{referencia.bib}
 
 % =========================
 % NOTAS DE REVISIÓN PENDIENTE
@@ -82,63 +104,86 @@
     \end{center}
 }
 
-\newcommand{\resumenpendiente}{
-    \begin{center}
-    \setlength{\fboxsep}{8pt}
-    \colorbox{yellow!45}{
-        \parbox{0.92\linewidth}{
-            \centering \textbf{El resumen se redactará al finalizar el artículo completo, una vez consolidadas la introducción, la metodología, los resultados y las conclusiones.}
-        }
-    }
-    \end{center}
-}
-
 % =========================
 % DATOS DEL ARTÍCULO
 % =========================
-\title{\textbf{Optimización de la gestión dinámica de flujos en arquitecturas SDN mediante Design Science Research}}
-
-\author{
-Bryan Stalin Guatemal Avilez\thanks{Carrera de Ingeniería de Software, Universidad Técnica de Ambato, Ambato, Ecuador. ORCID: 0009-0001-0218-4275. Correo: bguatemal3993@uta.edu.ec}
-\and
-Korayma Pico\thanks{Carrera de Ingeniería de Software, Universidad Técnica de Ambato, Ambato, Ecuador. ORCID: 0009-0006-6245-8385. Correo: bpico3173@uta.edu.ec}
-}
-
-\date{}
+\newcommand{\articletitlees}{Optimización de la gestión dinámica de flujos en arquitecturas SDN mediante Design Science Research}
+\newcommand{\articletitleen}{Optimization of dynamic flow management in SDN architectures through Design Science Research}
+\newcommand{\articledoi}{[DOI por asignar]}
+\newcommand{\fecharecibido}{[dd/mm/aaaa]}
+\newcommand{\fecharevisado}{[dd/mm/aaaa]}
+\newcommand{\fechaaprobado}{[dd/mm/aaaa]}
+\newcommand{\fechapublicado}{[dd/mm/aaaa]}
 
 \begin{document}
-
 \selectlanguage{spanish}
-\maketitle
 
-% =========================
-% RESUMEN EN ESPAÑOL
-% =========================
-\begin{abstract}
-\resumenpendiente
-\end{abstract}
+\vspace*{0.4cm}
 
-\vspace{0.3cm}
-\noindent\textbf{Palabras clave:} SDN; gestión de flujos; latencia; throughput; Design Science Research.
-
-% =========================
-% ABSTRACT EN INGLÉS
-% =========================
-\begin{otherlanguage}{english}
-\begin{abstract}
 \begin{center}
-\setlength{\fboxsep}{8pt}
-\colorbox{yellow!45}{
-    \parbox{0.92\linewidth}{
-        \centering \textbf{The abstract will be written once the full article has been completed, after consolidating the introduction, methodology, results, and conclusions.}
-    }
-}
+\textbf{ARTÍCULO DE INVESTIGACIÓN}
 \end{center}
-\end{abstract}
 
-\vspace{0.3cm}
-\noindent\textbf{Keywords:} SDN; flow management; latency; throughput; Design Science Research.
-\end{otherlanguage}
+\vspace{0.7cm}
+
+{\bfseries \articletitlees}
+
+\vspace{0.35cm}
+
+{\small \articletitleen}
+
+\vspace{0.45cm}
+
+\begin{center}
+\textbf{DOI:} \href{\articledoi}{\articledoi}
+\end{center}
+
+\vspace{0.6cm}
+
+\textbf{Bryan Stalin Guatemal Avilez}$^{1}$
+
+{\small
+$^{1}$ E-mail: \href{mailto:bguatemal3993@uta.edu.ec}{bguatemal3993@uta.edu.ec}
+\quad \textbf{Afiliación:} Universidad Técnica de Ambato, Ecuador.
+\quad \textbf{ORCID:} \href{https://orcid.org/0009-0001-0218-4275}{https://orcid.org/0009-0001-0218-4275}
+}
+
+\vspace{0.35cm}
+
+\textbf{Korayma Pico}$^{2}$
+
+{\small
+$^{2}$ E-mail: \href{mailto:bpico3173@uta.edu.ec}{bpico3173@uta.edu.ec}
+\quad \textbf{Afiliación:} Universidad Técnica de Ambato, Ecuador.
+\quad \textbf{ORCID:} \href{https://orcid.org/0009-0006-6245-8385}{https://orcid.org/0009-0006-6245-8385}
+}
+
+\vspace{0.7cm}
+
+\begin{center}
+\begin{tabular}{p{0.22\textwidth} p{0.22\textwidth}}
+\textbf{Recibido:} \fecharecibido & \textbf{Revisado:} \fecharevisado \\[0.2cm]
+\textbf{Aprobado:} \fechaaprobado & \textbf{Publicado:} \fechapublicado
+\end{tabular}
+\end{center}
+
+\vspace{0.8cm}
+
+\textbf{RESUMEN}
+
+El resumen se redactará al finalizar el artículo completo, una vez consolidadas la introducción, la metodología, los resultados y las conclusiones.
+
+\textbf{DESCRIPTORES:} SDN; gestión de flujos; latencia; throughput; Design Science Research.
+
+\vspace{0.5cm}
+
+\textbf{ABSTRACT}
+
+The abstract will be written once the full article has been completed, after consolidating the introduction, methodology, results, and conclusions.
+
+\textbf{DESCRIPTORS:} SDN; flow management; latency; throughput; Design Science Research.
+
+\vspace{0.6cm}
 
 % =========================
 % 1. INTRODUCCIÓN
@@ -152,23 +197,23 @@ Korayma Pico\thanks{Carrera de Ingeniería de Software, Universidad Técnica de 
 \introbox{introresults}{Resultados esperados}\hspace{0.2cm}
 \introbox{introimp}{Implicaciones/Conclusiones}
 
-\vspace{0.4cm}
+\vspace{0.35cm}
 
 \noindent
 \introhl{introcontext}{Las redes de datos actuales operan en escenarios cada vez más dinámicos, caracterizados por incrementos sostenidos del tráfico, mayor diversidad de servicios digitales y exigencias más estrictas en términos de calidad de servicio. En este contexto, métricas como la latencia y el throughput adquieren una relevancia central para valorar el desempeño de la infraestructura, por lo que la administración eficiente del tráfico se ha convertido en una necesidad técnica prioritaria. En este marco, \textit{Software-Defined Networking} (SDN) se ha consolidado como un paradigma que separa el plano de control del plano de datos y permite una gestión centralizada, programable y dinámica del comportamiento de la red. Las revisiones recientes coinciden en que esta arquitectura ofrece ventajas claras frente a enfoques distribuidos convencionales, aunque también muestran que el problema ya no consiste solo en centralizar el control, sino en decidir con qué criterios y con qué mecanismos se optimiza el tráfico en escenarios reales.} \parencite{survey_ai_sdn, openflow_review}
 
 \introhl{introproblem}{Los antecedentes muestran avances relevantes, pero también diferencias sustanciales entre enfoques. Mientras algunos trabajos, como los basados en MOORA, se orientan a comparar alternativas de ingeniería de tráfico desde una lógica multicriterio, otros estudios, como los sustentados en DDQN, priorizan la optimización adaptativa mediante aprendizaje automático. Esta diferencia es importante porque los primeros aportan marcos de selección y evaluación, pero no necesariamente implementan una solución funcional, mientras que los segundos demuestran mejoras operativas, aunque suelen concentrarse en escenarios específicos. En conjunto, la literatura evidencia progreso técnico, pero también una fragmentación del conocimiento: se estudian componentes del problema con profundidad, sin integrar suficientemente diseño del artefacto, fundamento metodológico y evaluación rigurosa dentro de una misma propuesta.} \parencite{moora_sdn, ddqn_sdn}
 
-\introhl{introsolution}{Frente a esta dispersión de enfoques, la presente investigación adopta el enfoque \textit{Design Science Research} (DSR) para proponer un artefacto de gestión dinámica de flujos implementado sobre una arquitectura SDN. La solución planteada se sustenta en un modelo de control basado en umbrales de saturación, con capacidad para monitorear el estado de la red y ejecutar decisiones automáticas de redireccionamiento cuando se detecten condiciones críticas de congestión. A diferencia de los estudios que se enfocan solo en balanceo, solo en detección temprana o solo en adaptación entre controladores, esta propuesta busca articular esos aportes dentro de un diseño orientado a resolver un problema de ingeniería concreto. Para su implementación se empleará Python como lenguaje de programación del controlador y Mininet como entorno de emulación de topologías de red.} \parencite{dynamic_lb_sdn, deep_learning_ryu, qos_lb_sdn, adaptive_lb_sdn}
+\introhl{introsolution}{Frente a esta dispersión de enfoques, la presente investigación adopta \textit{Design Science Research} (DSR) para proponer un artefacto de gestión dinámica de flujos implementado sobre una arquitectura SDN. La solución planteada se sustenta en un modelo de control basado en umbrales de saturación, con capacidad para monitorear el estado de la red y ejecutar decisiones automáticas de redireccionamiento cuando se detecten condiciones críticas de congestión. A diferencia de los estudios que se enfocan solo en balanceo, solo en detección temprana o solo en adaptación entre controladores, esta propuesta busca articular esos aportes dentro de un diseño orientado a resolver un problema de ingeniería concreto. Para su implementación se empleará Python como lenguaje de programación del controlador y Mininet como entorno de emulación de topologías de red.} \parencite{dynamic_lb_sdn, deep_learning_ryu, qos_lb_sdn, adaptive_lb_sdn}
 
 \introhl{introresults}{Los antecedentes experimentales también permiten establecer una lectura comparativa sobre los resultados esperados. Los estudios de routing cognitivo, asignación dinámica de controladores y control de congestión apoyado en OpenFlow reportan mejoras en retardo, estabilidad y capacidad de respuesta, pero lo hacen desde perspectivas parciales del problema, ya sea priorizando selección de rutas, distribución de control o mitigación de congestión. Esto implica que existe evidencia favorable sobre componentes específicos, aunque no siempre sobre una estrategia integral de gestión dinámica de flujos. En consecuencia, se espera que el artefacto propuesto aporte evidencia experimental más articulada, permitiendo contrastar si la combinación de monitoreo, análisis por umbrales y reencaminamiento automático mejora de forma verificable la latencia y el throughput frente a una arquitectura tradicional.} \parencite{cognitive_routing_sdn, controller_assignment_sdn, red_openflow_sdn}
 
 \introhl{introimp}{La relevancia de la investigación se sustenta tanto en su aporte técnico como en su valor metodológico. Desde el punto de vista aplicado, la propuesta pretende fortalecer el uso de SDN como alternativa viable para la optimización del tráfico en escenarios programables y de alta exigencia operativa; desde el punto de vista académico, busca superar la tendencia a estudiar soluciones aisladas y avanzar hacia una evaluación más integrada del artefacto. Esta necesidad se vuelve más evidente al contrastar estudios de gran escala, como la experiencia WAN de Google, con propuestas de balanceo sensible a congestión en centros de datos, pues ambos confirman la utilidad del control programable, pero en contextos y objetivos distintos. En este marco, la pregunta que guía el artículo es la siguiente: \textit{¿En qué medida el diseño y la implementación de un artefacto de gestión dinámica de flujos en una arquitectura SDN mejora el rendimiento de la red (latencia y throughput) en comparación con las arquitecturas de red tradicionales?} En correspondencia con ello, el objetivo consiste en evaluar el efecto del artefacto propuesto mediante métricas de latencia y throughput, procurando generar evidencia útil para futuras investigaciones y aplicaciones prácticas.} \parencite{b4_google_sdn, congestion_lb_datacenter}
 
 % =========================
-% 2. MATERIALES Y MÉTODOS
+% 2. METODOLOGÍA
 % =========================
-\section{Materiales y Métodos}
+\section{Metodología}
 
 \subsection{Enfoque metodológico}
 
