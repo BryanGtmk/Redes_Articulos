@@ -1,0 +1,220 @@
+\documentclass[12pt,a4paper]{article}
+
+% =========================
+% CODIFICACIÓN E IDIOMA
+% =========================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[main=spanish,english,shorthands=off]{babel}
+\usepackage{csquotes}
+
+% =========================
+% FUENTE Y FORMATO
+% =========================
+\usepackage{newtxtext,newtxmath}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.15}
+
+% =========================
+% PAQUETES ÚTILES
+% =========================
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage{hyperref}
+\Urlmuskip=0mu plus 1mu\relax
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+    pdftitle={Artículo METANOIA},
+    pdfauthor={Bryan Stalin Guatemal Avilez}
+}
+
+% =========================
+% BIBLIOGRAFÍA APA
+% =========================
+\usepackage[
+  backend=biber,
+  style=apa,
+  sorting=nyt,
+  sortcites=true
+]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+\addbibresource{sample.bib}
+
+% =========================
+% NOTA DE REVISIÓN PENDIENTE
+% =========================
+\newcommand{\revisionpendiente}{
+    \begin{center}
+    \setlength{\fboxsep}{8pt}
+    \colorbox{yellow!45}{
+        \parbox{0.9\linewidth}{
+            \centering \textbf{Esta sección se va a hacer en una próxima revisión.}
+        }
+    }
+    \end{center}
+}
+
+% =========================
+% DATOS DEL ARTÍCULO
+% =========================
+\title{\textbf{Optimización de la gestión dinámica de flujos en arquitecturas SDN mediante Design Science Research}}
+
+\author{
+Bryan Stalin Guatemal Avilez\thanks{Carrera de Ingeniería de Software, Universidad Técnica de Ambato. Correo de correspondencia: [completar].}
+}
+
+\date{}
+
+\begin{document}
+
+\selectlanguage{spanish}
+\maketitle
+
+% =========================
+% RESUMEN EN ESPAÑOL
+% =========================
+\begin{abstract}
+La creciente complejidad del tráfico en redes de datos exige mecanismos de gestión más flexibles y adaptativos que los ofrecidos por las arquitecturas tradicionales. En este contexto, el presente estudio tiene como objetivo evaluar en qué medida un artefacto de gestión dinámica de flujos, implementado sobre una arquitectura Software-Defined Networking (SDN), mejora el rendimiento de la red en términos de latencia y throughput. Metodológicamente, la investigación se desarrolla bajo el enfoque Design Science Research (DSR), mediante el diseño, construcción y evaluación de un modelo de control basado en umbrales de saturación para la detección de congestión y el redireccionamiento automático de flujos. La implementación se realiza con Python como lenguaje de programación del controlador y Mininet como entorno de emulación de topologías de red. Los resultados esperados se orientan a demostrar una mejora del rendimiento frente a una arquitectura de red convencional, complementada con criterios de evaluación de calidad basados en ISO/IEC 25010. Se concluye que la aplicación de SDN, combinada con una estrategia de gestión dinámica de flujos, constituye una alternativa viable para optimizar la eficiencia operativa de la red y aportar evidencia técnica útil para futuras investigaciones y desarrollos en entornos programables.
+\end{abstract}
+
+\vspace{0.3cm}
+\noindent\textbf{Palabras clave:} SDN; gestión de flujos; latencia; throughput; Design Science Research.
+
+% =========================
+% ABSTRACT EN INGLÉS
+% =========================
+\begin{otherlanguage}{english}
+\begin{abstract}
+The growing complexity of data traffic demands more flexible and adaptive management mechanisms than those provided by traditional network architectures. In this context, this study aims to evaluate to what extent a dynamic flow management artifact, implemented over a Software-Defined Networking (SDN) architecture, improves network performance in terms of latency and throughput. Methodologically, the research is conducted under the Design Science Research (DSR) approach through the design, construction, and evaluation of a control model based on saturation thresholds for congestion detection and automatic flow rerouting. The implementation is carried out using Python as the controller programming language and Mininet as the network topology emulation environment. The expected results aim to demonstrate an improvement in performance compared to a conventional network architecture, complemented by quality evaluation criteria based on ISO/IEC 25010. It is concluded that the application of SDN, combined with a dynamic flow management strategy, represents a viable alternative for optimizing network operational efficiency and providing technical evidence for future research and developments in programmable environments.
+\end{abstract}
+
+\vspace{0.3cm}
+\noindent\textbf{Keywords:} SDN; flow management; latency; throughput; Design Science Research.
+\end{otherlanguage}
+
+% =========================
+% 1. INTRODUCCIÓN
+% =========================
+\section{Introducción}
+
+El incremento sostenido del tráfico en redes de datos, junto con la expansión de servicios digitales y aplicaciones sensibles al retardo, ha intensificado la necesidad de mecanismos de control capaces de responder con mayor flexibilidad a escenarios de congestión, variabilidad del tráfico y cambios continuos en la demanda. En este contexto, la gestión de flujos de red constituye un problema técnico central, dado que de ella dependen indicadores de desempeño como la latencia, el throughput, la estabilidad del servicio y el aprovechamiento eficiente de la infraestructura. En consecuencia, la operación de la red ya no puede entenderse únicamente desde su capacidad física, sino también desde la lógica de decisión que organiza el encaminamiento, la distribución de carga y la reacción ante eventos de saturación.
+
+Frente a estas limitaciones, \textit{Software-Defined Networking} (SDN) se ha consolidado como un paradigma que separa el plano de control del plano de datos, permitiendo una administración centralizada, programable y dinámica del tráfico. Esta característica ha convertido a SDN en una alternativa particularmente relevante para la ingeniería de tráfico, el balanceo de carga, el control de congestión y el reencaminamiento adaptativo, ya que facilita la implementación de políticas inteligentes desde el controlador y ofrece una visión global del estado de la red \parencite{survey_ai_sdn, openflow_review}. A diferencia de los enfoques convencionales, donde la toma de decisiones depende de protocolos distribuidos con menor capacidad de adaptación, las arquitecturas SDN permiten responder con mayor precisión a condiciones cambiantes de operación.
+
+Los antecedentes científicos revisados muestran que la literatura reciente ha abordado la optimización del rendimiento en SDN desde distintas perspectivas. Por un lado, se han desarrollado estudios de revisión y síntesis que clasifican técnicas convencionales, heurísticas e inteligentes para el control del tráfico y el balanceo de carga, evidenciando la amplitud de enfoques existentes y la necesidad de seleccionar mecanismos acordes con el problema y el contexto de aplicación \parencite{survey_ai_sdn, openflow_review}. Por otro lado, se han propuesto modelos de decisión multicriterio, como el método MOORA, para comparar alternativas de ingeniería de tráfico considerando variables tales como throughput, latencia, consumo energético, seguridad, tolerancia a fallos y desempeño global \parencite{moora_sdn}. Estos trabajos aportan una base conceptual relevante porque permiten entender tanto la diversidad de estrategias de optimización como los criterios con los que su rendimiento puede ser valorado.
+
+En el plano experimental, diversas investigaciones han mostrado que la introducción de técnicas de aprendizaje profundo, aprendizaje por refuerzo y algoritmos adaptativos en entornos SDN puede producir mejoras medibles en throughput, latencia, retardo, fluctuación y pérdida de paquetes. En esta línea, destacan propuestas sustentadas en modelos DDQN, controladores Ryu con mecanismos inteligentes de redistribución del tráfico y algoritmos de balanceo orientados a calidad de servicio, normalmente evaluados mediante simulación en Mininet, OpenFlow y otros entornos programables \parencite{ddqn_sdn, dynamic_lb_sdn, deep_learning_ryu, qos_lb_sdn, adaptive_lb_sdn}. Aunque estos estudios parten de enfoques distintos, coinciden en demostrar que la programabilidad del controlador permite incorporar decisiones más eficaces de gestión dinámica frente a escenarios complejos de tráfico.
+
+De manera complementaria, otros trabajos han examinado problemas específicos de enrutamiento cognitivo, asignación dinámica de controladores y control de congestión apoyado en OpenFlow. Estas propuestas han sido evaluadas mediante métricas como latencia extremo a extremo, tiempo de ida y vuelta, jitter, utilización del búfer, throughput y consumo de recursos, mostrando que la toma de decisiones adaptativa puede reducir retardo, mejorar estabilidad y responder de forma más eficiente a variaciones abruptas de la carga \parencite{cognitive_routing_sdn, controller_assignment_sdn, red_openflow_sdn}. Asimismo, experiencias de gran escala, como la arquitectura SDN WAN implementada por Google y los enfoques de balanceo sensible a la congestión en centros de datos, aportan evidencia de que el control centralizado y programable no solo es viable en laboratorio, sino también en escenarios operativos de alta exigencia \parencite{b4_google_sdn, congestion_lb_datacenter}.
+
+No obstante, el análisis comparado de estos antecedentes también permite identificar una brecha. Una parte importante de los trabajos encontrados se concentra en resolver subproblemas puntuales, como balanceo de carga, routing adaptativo o detección de congestión, mientras que otros se enfocan en demostrar mejoras específicas sin integrar de forma suficiente el diseño del artefacto, su fundamento técnico, su entorno de implementación y una evaluación metodológicamente estructurada. En otras palabras, existe evidencia sobre mecanismos eficaces, pero todavía resulta necesario articular el problema práctico de gestión dinámica de flujos con un proceso riguroso de diseño, construcción y evaluación del artefacto, de manera que la solución no solo funcione, sino que también quede claramente justificada y validada.
+
+La relevancia de la presente investigación se sustenta en esa necesidad. Desde el punto de vista técnico, el estudio propone una solución orientada a optimizar la gestión dinámica de flujos en arquitecturas SDN mediante un modelo de control basado en umbrales de saturación. Desde el punto de vista metodológico, busca fortalecer la relación entre la teoría de SDN, los enfoques de optimización del tráfico y la investigación en ingeniería basada en diseño. En consecuencia, la propuesta adquiere valor tanto por su posible impacto en el desempeño de la red como por su aporte al desarrollo de artefactos tecnológicos evaluables en contextos reproducibles.
+
+En este marco, la pregunta de investigación que guía el artículo es la siguiente: \textit{¿En qué medida el diseño y la implementación de un artefacto de gestión dinámica de flujos en una arquitectura SDN mejora el rendimiento de la red (latencia y throughput) en comparación con las arquitecturas de red tradicionales?} En correspondencia con esta pregunta, el objetivo del estudio consiste en evaluar el efecto de un artefacto de gestión dinámica de flujos implementado sobre una arquitectura SDN, utilizando métricas de latencia y throughput para contrastar su desempeño frente a una arquitectura convencional. Para responder a este problema, se adopta el enfoque \textit{Design Science Research}, por su pertinencia para resolver problemas de ingeniería a través del diseño, construcción y evaluación sistemática de artefactos tecnológicos.
+
+% =========================
+% 2. MATERIALES Y MÉTODOS
+% =========================
+\section{Materiales y Métodos}
+
+\subsection{Enfoque metodológico}
+
+La presente investigación se desarrolla bajo el enfoque de \textit{Design Science Research} (DSR), debido a que se orienta a la solución de un problema técnico mediante la creación y evaluación de un artefacto tecnológico. Esta elección metodológica responde a la naturaleza del problema abordado, ya que el estudio no pretende únicamente describir el comportamiento del tráfico en redes SDN, sino diseñar un mecanismo funcional de gestión dinámica de flujos capaz de responder a condiciones de congestión y variabilidad del tráfico en un entorno controlado. En este sentido, DSR resulta pertinente porque articula la identificación del problema, la construcción de la solución, la demostración de su utilidad y la evaluación de su desempeño dentro de una misma lógica investigativa.
+
+\subsection{Justificación del uso de Design Science Research}
+
+El uso de DSR se justifica por el carácter eminentemente ingenieril del trabajo. La propuesta no se limita a revisar literatura o comparar soluciones existentes, sino que plantea un artefacto de control basado en umbrales de saturación para detectar congestión y ejecutar decisiones automáticas de redireccionamiento en una arquitectura SDN. Por tanto, la contribución principal no radica solo en describir un fenómeno, sino en generar una solución funcional con utilidad práctica y potencial de aplicación en escenarios de gestión de tráfico. Además, la metodología permite vincular la relevancia del problema con el rigor científico, dado que exige fundamentar el artefacto en antecedentes previos, implementarlo en un entorno reproducible y someterlo a evaluación mediante métricas objetivas.
+
+\subsection{Operacionalización de las fases de Design Science Research}
+
+La fase de relevancia parte del reconocimiento de una limitación presente en las arquitecturas de red tradicionales: su menor capacidad de adaptación frente a escenarios dinámicos de congestión, cambios en la demanda y variabilidad del tráfico. A partir de esta problemática, se establece la necesidad de un mecanismo de control capaz de monitorear el estado de la red y reencaminar flujos cuando se detecten condiciones críticas de saturación. En esta fase también se definen los objetivos del artefacto, las necesidades del entorno de aplicación y las métricas mediante las cuales será valorado su desempeño.
+
+La fase de diseño se orienta a la construcción del artefacto propuesto. Este consiste en un modelo de gestión dinámica de flujos implementado en una arquitectura SDN, cuya lógica de funcionamiento se apoya en umbrales de saturación. Cuando el sistema identifica que determinados enlaces o rutas superan niveles predefinidos de utilización o congestión, el controlador ejecuta decisiones de redireccionamiento con el propósito de distribuir de mejor manera la carga y mejorar el rendimiento de la red. De este modo, el diseño no se limita a una idea conceptual, sino que define componentes funcionales, reglas de decisión y mecanismos de respuesta.
+
+La fase de rigor se sustenta en una revisión de antecedentes científicos relacionados con ingeniería de tráfico, balanceo de carga, routing adaptativo, aprendizaje automático y control de congestión en SDN. Esta base teórica y empírica permite justificar la selección del problema, del tipo de artefacto, de las herramientas experimentales y de las variables de evaluación. En este punto, los trabajos revisados aportan evidencia de que Mininet, OpenFlow, Ryu y modelos inteligentes de decisión constituyen recursos válidos para la evaluación de soluciones de gestión dinámica en entornos SDN \parencite{ddqn_sdn, cognitive_routing_sdn, controller_assignment_sdn, qos_lb_sdn}.
+
+La fase de evaluación busca determinar en qué medida el artefacto propuesto mejora el desempeño de la red frente a una arquitectura tradicional. Para ello, se plantean escenarios comparativos en los que se medirán métricas cuantitativas de latencia y throughput, incorporando además criterios complementarios de evaluación apoyados en la norma ISO/IEC 25010 para valorar atributos vinculados con eficiencia del desempeño, fiabilidad y mantenibilidad. De esta forma, la evaluación no solo examina si la solución funciona, sino también si su comportamiento resulta consistente y técnicamente defendible.
+
+\subsection{Diseño del artefacto}
+
+El artefacto desarrollado corresponde a un modelo de control dinámico de flujos implementado sobre una arquitectura SDN. Su propósito es monitorear el comportamiento del tráfico, identificar condiciones de congestión a partir de umbrales preestablecidos y generar acciones automáticas de reencaminamiento cuando se detecten situaciones de saturación. La lógica de decisión será programada en Python dentro del controlador SDN, de modo que el sistema pueda reaccionar de manera adaptativa frente a variaciones en la carga de la red.
+
+Desde el punto de vista funcional, el artefacto integra tres componentes principales. El primero es el componente de monitoreo, encargado de obtener información del estado del tráfico y de los enlaces. El segundo es el componente de análisis, donde se comparan los valores observados con los umbrales de saturación definidos. El tercero es el componente de decisión, que determina si es necesario redistribuir flujos hacia rutas alternativas para reducir la congestión y mejorar el rendimiento global. La articulación de estos componentes permite que el artefacto opere como una solución de control y no únicamente como un mecanismo descriptivo de observación de la red.
+
+\subsection{Entorno experimental y herramientas}
+
+La implementación y evaluación del artefacto se llevará a cabo en un entorno de emulación de redes utilizando Mininet. Esta herramienta permite construir topologías virtuales reproducibles, generar tráfico controlado y comparar de manera objetiva el comportamiento de una arquitectura tradicional frente a una arquitectura SDN. Su uso ha sido recurrente en trabajos relacionados con balanceo de carga, aprendizaje por refuerzo, routing adaptativo y mecanismos de control inteligente en redes programables \parencite{ddqn_sdn, dynamic_lb_sdn, cognitive_routing_sdn, qos_lb_sdn}.
+
+Para la comunicación con los dispositivos y la administración del plano de control se empleará OpenFlow, mientras que la lógica de control será desarrollada en Python. En función del diseño definitivo del experimento, podrá utilizarse un controlador compatible con estas herramientas, como Ryu, dada su flexibilidad para implementar algoritmos orientados a la gestión dinámica del tráfico. La selección de estas tecnologías responde a tres criterios: pertinencia técnica para el problema abordado, uso validado en antecedentes científicos y compatibilidad con escenarios de evaluación reproducibles.
+
+\subsection{Diseño comparativo del experimento}
+
+El estudio se estructurará sobre dos condiciones experimentales: una arquitectura de red tradicional y una arquitectura SDN con el artefacto de gestión dinámica de flujos. La comparación entre ambas permitirá observar las diferencias de rendimiento atribuibles a la incorporación del modelo propuesto. Este diseño comparativo resulta coherente con la pregunta de investigación, dado que busca establecer si la solución basada en SDN produce mejoras verificables frente a un enfoque convencional.
+
+Cada escenario será sometido a pruebas bajo condiciones controladas de tráfico, procurando mantener comparabilidad entre topologías, carga generada y parámetros experimentales. Esta decisión metodológica permite reducir sesgos de interpretación y atribuir con mayor precisión las diferencias observadas al comportamiento del artefacto implementado.
+
+\subsection{Unidad de análisis, variables y métricas}
+
+La unidad de análisis está constituida por el comportamiento del tráfico de red en topologías emuladas bajo las dos condiciones experimentales definidas. La observación se centrará en la forma en que la red responde ante la carga y la congestión cuando opera con una lógica convencional y cuando incorpora el artefacto de gestión dinámica de flujos.
+
+Las variables principales del estudio serán la latencia y el throughput. La latencia se entenderá como el tiempo requerido para la transmisión de paquetes entre nodos de la red, mientras que el throughput se asumirá como el ancho de banda efectivo alcanzado durante la comunicación. Estas métricas han sido utilizadas de manera recurrente en investigaciones previas orientadas a evaluar rendimiento, eficiencia y comportamiento del tráfico en entornos SDN \parencite{moora_sdn, ddqn_sdn, adaptive_lb_sdn}. De manera complementaria, podrán considerarse indicadores auxiliares como retardo, fluctuación, pérdida de paquetes o utilización de enlaces, en caso de que el comportamiento experimental exija un análisis más detallado.
+
+\subsection{Procedimiento metodológico}
+
+El procedimiento metodológico se desarrollará en varias etapas articuladas con la lógica de DSR. En primer lugar, se realizará la revisión de literatura y la consolidación del marco conceptual y técnico del estudio. En segundo lugar, se diseñará el artefacto de gestión dinámica de flujos, definiendo sus componentes, reglas de decisión y umbrales de saturación. En tercer lugar, se implementará la lógica del controlador en Python y se configurarán las topologías de red en Mininet. Posteriormente, se ejecutarán pruebas comparativas entre el entorno tradicional y el entorno SDN con el artefacto propuesto. Finalmente, se recopilarán y analizarán los datos obtenidos para determinar el efecto de la solución sobre las métricas seleccionadas.
+
+De forma más específica, el proceso experimental comprenderá las siguientes actividades:
+\begin{enumerate}
+    \item Definición de los escenarios de comparación entre red tradicional y red SDN.
+    \item Diseño de topologías y parametrización del tráfico en Mininet.
+    \item Implementación del controlador y del algoritmo basado en umbrales de saturación.
+    \item Ejecución de pruebas repetidas bajo condiciones controladas.
+    \item Recolección de datos de latencia y throughput.
+    \item Organización y depuración de los datos obtenidos.
+    \item Análisis comparativo de resultados entre ambos escenarios.
+    \item Interpretación de los hallazgos en relación con los antecedentes revisados.
+\end{enumerate}
+
+\subsection{Técnicas de análisis de datos}
+
+Los datos recolectados se analizarán mediante estadística descriptiva, utilizando medidas que permitan resumir y comparar el comportamiento de las métricas en los dos escenarios experimentales. En caso de observar diferencias consistentes entre los valores de latencia y throughput, se considerará la aplicación de pruebas estadísticas que permitan determinar si dichas diferencias son significativas. Este análisis cuantitativo buscará establecer, con base en evidencia experimental, si la incorporación del artefacto de gestión dinámica de flujos produce mejoras verificables respecto de la arquitectura convencional.
+
+\subsection{Criterios de validación}
+
+La validación del artefacto se realizará en dos niveles. En primer lugar, se analizará la mejora cuantitativa del rendimiento de la red a partir de las métricas de latencia y throughput. En segundo lugar, se incorporarán criterios complementarios de calidad apoyados en la norma ISO/IEC 25010, especialmente en atributos vinculados con eficiencia del desempeño, fiabilidad y mantenibilidad. Esta doble validación permitirá valorar no solo si la solución mejora el tráfico de la red, sino también si el artefacto posee condiciones adecuadas de funcionamiento y sostenibilidad técnica.
+
+\subsection{Consideraciones éticas}
+
+La investigación no involucra experimentación con seres humanos ni tratamiento de datos personales sensibles. El estudio se desarrollará en entornos emulados y controlados, lo que permite garantizar integridad académica, trazabilidad metodológica y uso responsable de las fuentes bibliográficas. Asimismo, se priorizará el empleo de literatura científica con DOI o enlace válido y se excluirán referencias incompletas o no verificables, con el fin de mantener consistencia metodológica y rigor en la construcción del manuscrito.
+
+% =========================
+% 3. RESULTADOS Y DISCUSIÓN
+% =========================
+\section{Resultados y Discusión}
+
+\revisionpendiente
+
+% =========================
+% 4. CONCLUSIONES
+% =========================
+\section{Conclusiones}
+
+\revisionpendiente
+
+% =========================
+% REFERENCIAS
+% =========================
+\printbibliography[title={Referencias Bibliográficas}]
+
+\end{document}
