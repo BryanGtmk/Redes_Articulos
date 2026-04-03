@@ -3084,17 +3084,30 @@
     <bcf:citekey order="4" intorder="3">red_openflow_sdn</bcf:citekey>
     <bcf:citekey order="5" intorder="1">b4_google_sdn</bcf:citekey>
     <bcf:citekey order="5" intorder="2">congestion_lb_datacenter</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">ddqn_sdn</bcf:citekey>
-    <bcf:citekey order="6" intorder="2">cognitive_routing_sdn</bcf:citekey>
-    <bcf:citekey order="6" intorder="3">controller_assignment_sdn</bcf:citekey>
-    <bcf:citekey order="6" intorder="4">qos_lb_sdn</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">ddqn_sdn</bcf:citekey>
-    <bcf:citekey order="7" intorder="2">dynamic_lb_sdn</bcf:citekey>
-    <bcf:citekey order="7" intorder="3">cognitive_routing_sdn</bcf:citekey>
-    <bcf:citekey order="7" intorder="4">qos_lb_sdn</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">moora_sdn</bcf:citekey>
-    <bcf:citekey order="8" intorder="2">ddqn_sdn</bcf:citekey>
-    <bcf:citekey order="8" intorder="3">adaptive_lb_sdn</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">survey_ai_sdn</bcf:citekey>
+    <bcf:citekey order="6" intorder="2">openflow_review</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">moora_sdn</bcf:citekey>
+    <bcf:citekey order="7" intorder="2">ddqn_sdn</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">dynamic_lb_sdn</bcf:citekey>
+    <bcf:citekey order="8" intorder="2">deep_learning_ryu</bcf:citekey>
+    <bcf:citekey order="8" intorder="3">qos_lb_sdn</bcf:citekey>
+    <bcf:citekey order="8" intorder="4">adaptive_lb_sdn</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">cognitive_routing_sdn</bcf:citekey>
+    <bcf:citekey order="9" intorder="2">controller_assignment_sdn</bcf:citekey>
+    <bcf:citekey order="9" intorder="3">red_openflow_sdn</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">b4_google_sdn</bcf:citekey>
+    <bcf:citekey order="10" intorder="2">congestion_lb_datacenter</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">ddqn_sdn</bcf:citekey>
+    <bcf:citekey order="11" intorder="2">cognitive_routing_sdn</bcf:citekey>
+    <bcf:citekey order="11" intorder="3">controller_assignment_sdn</bcf:citekey>
+    <bcf:citekey order="11" intorder="4">qos_lb_sdn</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">ddqn_sdn</bcf:citekey>
+    <bcf:citekey order="12" intorder="2">dynamic_lb_sdn</bcf:citekey>
+    <bcf:citekey order="12" intorder="3">cognitive_routing_sdn</bcf:citekey>
+    <bcf:citekey order="12" intorder="4">qos_lb_sdn</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">moora_sdn</bcf:citekey>
+    <bcf:citekey order="13" intorder="2">ddqn_sdn</bcf:citekey>
+    <bcf:citekey order="13" intorder="3">adaptive_lb_sdn</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">

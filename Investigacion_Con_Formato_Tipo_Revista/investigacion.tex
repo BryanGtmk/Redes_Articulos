@@ -211,6 +211,97 @@ The abstract will be written once the full article has been completed, after con
 \introhl{introimp}{La relevancia de la investigación se sustenta tanto en su aporte técnico como en su valor metodológico. Desde el punto de vista aplicado, la propuesta pretende fortalecer el uso de SDN como alternativa viable para la optimización del tráfico en escenarios programables y de alta exigencia operativa; desde el punto de vista académico, busca superar la tendencia a estudiar soluciones aisladas y avanzar hacia una evaluación más integrada del artefacto. Esta necesidad se vuelve más evidente al contrastar estudios de gran escala, como la experiencia WAN de Google, con propuestas de balanceo sensible a congestión en centros de datos, pues ambos confirman la utilidad del control programable, pero en contextos y objetivos distintos. En este marco, la pregunta que guía el artículo es la siguiente: \textit{¿En qué medida el diseño y la implementación de un artefacto de gestión dinámica de flujos en una arquitectura SDN mejora el rendimiento de la red (latencia y throughput) en comparación con las arquitecturas de red tradicionales?} En correspondencia con ello, el objetivo consiste en evaluar el efecto del artefacto propuesto mediante métricas de latencia y throughput, procurando generar evidencia útil para futuras investigaciones y aplicaciones prácticas.} \parencite{b4_google_sdn, congestion_lb_datacenter}
 
 % =========================
+% 2. BACKGROUND
+% =========================
+\section{Background}
+
+El \textit{background} de la presente investigación se fundamenta en la evolución reciente de las propuestas orientadas a optimizar el comportamiento del tráfico en entornos \textit{Software-Defined Networking} (SDN). La literatura revisada muestra que el problema ha sido abordado desde perspectivas diversas, incluyendo modelos multicriterio para selección de estrategias, enfoques basados en aprendizaje automático, técnicas de balanceo de carga, mecanismos de detección temprana de congestión y propuestas de asignación dinámica de controladores. Esta diversidad evidencia que la gestión dinámica de flujos constituye un campo activo de investigación, pero también revela que las soluciones existentes suelen centrarse en componentes parciales del problema, sin integrar de forma suficiente diseño del artefacto, fundamento metodológico y evaluación rigurosa dentro de una misma propuesta \parencite{survey_ai_sdn, openflow_review}.
+
+Desde una perspectiva comparativa, algunos trabajos se orientan principalmente a la evaluación y selección de alternativas. Por ejemplo, las propuestas basadas en MOORA permiten comparar opciones de ingeniería de tráfico con base en múltiples criterios de desempeño, aportando un marco útil para la toma de decisiones. Sin embargo, su alcance se concentra más en la valoración de alternativas que en la implementación de un artefacto operativo. En contraste, estudios basados en aprendizaje por refuerzo profundo, como los sustentados en DDQN, priorizan la adaptación dinámica y la optimización automática del comportamiento de la red, mostrando mejoras en escenarios específicos, aunque con una orientación más focalizada en el rendimiento algorítmico que en la integración metodológica del proceso de diseño. Esta diferencia es relevante, porque muestra que la literatura no solo presenta soluciones distintas, sino también niveles distintos de aplicabilidad para resolver el problema de investigación \parencite{moora_sdn, ddqn_sdn}.
+
+Otras investigaciones se han concentrado en resolver subproblemas concretos relacionados con la congestión y el control del tráfico. Algunas propuestas han empleado aprendizaje profundo integrado a controladores como Ryu para detectar y prevenir congestión de forma temprana, mientras que otras han desarrollado algoritmos de balanceo de carga orientados a calidad de servicio o técnicas adaptativas para múltiples controladores SDN. Estos estudios son relevantes porque demuestran que la programabilidad de SDN permite mejorar métricas como latencia, throughput, retardo y estabilidad del servicio. No obstante, también muestran una limitación recurrente: las mejoras obtenidas suelen validarse en componentes específicos del sistema, sin articular de manera suficiente una solución integral de gestión dinámica de flujos respaldada por una metodología de investigación orientada al diseño \parencite{dynamic_lb_sdn, deep_learning_ryu, qos_lb_sdn, adaptive_lb_sdn}.
+
+De manera complementaria, antecedentes como el routing cognitivo, la asignación dinámica de controladores y los mecanismos de control de congestión apoyados en OpenFlow amplían la comprensión del problema desde distintas dimensiones operativas. Mientras algunas propuestas priorizan la selección de rutas y la reducción del retardo, otras se enfocan en distribuir la carga de control o en mitigar la saturación mediante políticas de redireccionamiento. Esta comparación es significativa, ya que muestra que existe evidencia favorable sobre componentes importantes de la gestión dinámica, pero no necesariamente sobre artefactos que integren monitoreo, análisis y reencaminamiento automático dentro de una misma solución evaluada de forma rigurosa \parencite{cognitive_routing_sdn, controller_assignment_sdn, red_openflow_sdn}.
+
+En conjunto, los antecedentes revisados permiten identificar una brecha clara. La literatura confirma la utilidad de SDN para optimizar el tráfico y responder ante eventos de congestión, pero también evidencia una fragmentación entre estudios de evaluación, estudios de optimización puntual y estudios de control específico. En este contexto, la presente investigación se justifica porque busca diseñar y evaluar un artefacto de gestión dinámica de flujos que articule esos aportes dentro de un enfoque \textit{Design Science Research} (DSR), procurando una solución técnicamente viable, metodológicamente fundamentada y comparable frente a arquitecturas tradicionales \parencite{b4_google_sdn, congestion_lb_datacenter}.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\scriptsize
+
+\textbf{Tabla 1}\\[0.12cm]
+\textit{Clasificación de los antecedentes según su enfoque y aporte al problema de investigación}
+
+\vspace{0.2cm}
+
+\begin{tabular}{|p{2.5cm}|p{2.7cm}|p{2.7cm}|p{2.7cm}|p{2.5cm}|}
+\hline
+\textbf{Línea temática} & \textbf{Selección / evaluación} & \textbf{Optimización adaptativa} & \textbf{Control específico} & \textbf{Escala / aplicación} \\
+\hline
+
+Estado del arte y revisiones &
+Belgaum et al. (2020) &
+-- &
+Miguel-Alonso (2023) &
+-- \\
+\hline
+
+Ingeniería de tráfico multicriterio &
+Ramancha (2024) &
+-- &
+-- &
+-- \\
+\hline
+
+Balanceo de carga inteligente &
+-- &
+Gilliard et al. (2024) &
+Alssaheli et al. (2022) &
+Alizadeh et al. (2014) \\
+\hline
+
+Detección temprana de congestión &
+-- &
+Prabhavat et al. (2022) &
+Airaldi et al. (2020) &
+-- \\
+\hline
+
+Asignación dinámica de controladores &
+-- &
+Sharma et al. (2023) &
+Praveen et al. (2022) &
+-- \\
+\hline
+
+Routing cognitivo &
+-- &
+Anadanaiah y Rao (2024) &
+-- &
+-- \\
+\hline
+
+Entornos de gran escala &
+-- &
+-- &
+-- &
+Jain et al. (2013) \\
+\hline
+
+Brecha identificada &
+Los estudios de revisión y evaluación permiten comprender el problema y comparar alternativas, pero no desarrollan un artefacto operativo completo. &
+Los estudios adaptativos muestran mejoras en latencia, throughput y respuesta dinámica, aunque suelen centrarse en escenarios o algoritmos específicos. &
+Las propuestas de control puntual mitigan congestión o redistribuyen tráfico, pero no siempre integran monitoreo, análisis y reencaminamiento dentro de una sola solución. &
+Los antecedentes de gran escala validan la utilidad de SDN, aunque en contextos distintos al artefacto propuesto en esta investigación. \\
+\hline
+
+\end{tabular}
+
+\vspace{0.15cm}
+\noindent\textbf{Fuente:} Los autores.
+\end{table}
+% =========================
 % 2. METODOLOGÍA
 % =========================
 \section{Metodología}
