@@ -10,3 +10,5 @@
 *.synctex.gz
 *.dvi
 *-blx.bib
+*bcf
+*.run.xml
